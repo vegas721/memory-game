@@ -8,7 +8,6 @@
     margin: 0 auto;
     padding: 20px;
     border-radius: 20px;
-    max-width: 1440px;
     width: 100%;
     height: 100vh;
     background: url(../images/bg-main.jpg) center center / cover no-repeat;
@@ -24,7 +23,7 @@ button {
     cursor: pointer;
 }
 
-.container h1 {
+.header-title h1 {
     margin: 60px auto;
     width: 300px;
     height: 50px;
@@ -77,16 +76,16 @@ button {
 
 .game-field {
     display: grid;
-    gap: 10px;
+    gap: 20px;
     grid-template: 150px 150px 150px 150px/ 100px 100px 100px 100px;
     justify-items: stretch;
     justify-content: center;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #c8810f;
+    border: 1px solid #0f8dc8;
     border-radius: 20px;
-    max-width: 1440px;
-    width: 700px;
+    max-width: 500px;
+    width: 100%;
     background: url(../images/bg-game.jpg) center center / cover no-repeat;
 }
 
@@ -98,6 +97,13 @@ button {
 }
 
 .game-card img {
-    width: 100px;
-    height: 150px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: center center;
+    transition: transform 0.5s ease;
+}
+
+.game-card:hover img {
+    transform: scale(1.1);
 }
