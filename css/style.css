@@ -3,3 +3,101 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.container {
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 20px;
+    max-width: 1440px;
+    width: 100%;
+    height: 100vh;
+    background: url(../images/bg-main.jpg) center center / cover no-repeat;
+}
+
+button {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+    text-align: center;
+    border-style: none;
+    cursor: pointer;
+}
+
+.container h1 {
+    margin: 60px auto;
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 150%;
+    text-align: center;
+    color: #f0f0f6;
+    background: #0f8dc8;
+}
+
+.header-buttons {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-buttons button {
+    display: block;
+    margin: 0;
+    border-radius: 100px;
+    width: 200px;
+    height: 40px;
+    color: #f0f0f6;
+    background: #0f8dc8;
+    transition: color 0.5s ease, background 0.5s ease;
+}
+
+.game-info {
+    width: 400px;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+}
+
+.game-info p {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+    text-align: center;
+    border-style: none;
+    color: #f0f0f6;
+}
+
+.game-field {
+    display: grid;
+    gap: 10px;
+    grid-template: 150px 150px 150px 150px/ 100px 100px 100px 100px;
+    justify-items: stretch;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #c8810f;
+    border-radius: 20px;
+    max-width: 1440px;
+    width: 700px;
+    background: url(../images/bg-game.jpg) center center / cover no-repeat;
+}
+
+.game-card {
+    width: 100px;
+    height: 150px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.game-card img {
+    width: 100px;
+    height: 150px;
+}
