@@ -1,0 +1,81 @@
+[
+  {
+    "name": "vegas",
+    "image": "./images/vegas.jpg"
+  },
+  
+  {
+    "name": "colorado",
+    "image": "./images/colorado.jpg"
+  },
+  
+  {
+    "name": "minnesota",
+    "image": "./images/minnesota.jpg"
+  },
+  
+  {
+    "name": "pittsburgh",
+    "image": "./images/pittsburgh.jpg"
+  },
+  
+  {
+    "name": "anaheim",
+    "image": "./images/anaheim.jpg"
+  },
+  
+  {
+    "name": "nyrangers",
+    "image": "./images/nyrangers.jpg"
+  },
+  
+  {
+    "name": "sanjose",
+    "image": "./images/sanjose.jpg"
+  },
+  
+  {
+    "name": "washington",
+    "image": "./images/washington.jpg"
+  },
+
+  {
+    "name": "vegas",
+    "image": "./images/vegas.jpg"
+  },
+  
+  {
+    "name": "colorado",
+    "image": "./images/colorado.jpg"
+  },
+  
+  {
+    "name": "minnesota",
+    "image": "./images/minnesota.jpg"
+  },
+  
+  {
+    "name": "pittsburgh",
+    "image": "./images/pittsburgh.jpg"
+  },
+  
+  {
+    "name": "anaheim",
+    "image": "./images/anaheim.jpg"
+  },
+  
+  {
+    "name": "nyrangers",
+    "image": "./images/nyrangers.jpg"
+  },
+  
+  {
+    "name": "sanjose",
+    "image": "./images/sanjose.jpg"
+  },
+  
+  {
+    "name": "washington",
+    "image": "./images/washington.jpg"
+  }
+]

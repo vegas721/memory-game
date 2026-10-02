@@ -23,10 +23,10 @@ const section2 = document.createElement('section');
 const gameInfo = document.createElement('div');
 gameInfo.classList.add('game-info');
 const countSteps = document.createElement('p');
-countSteps.textContent = 'Число ходов:';
+countSteps.textContent = 'Число ходов: ';
 const countStepsValue = document.createElement('span').textContent = '0';
 const countFoundPairs = document.createElement('p');
-countFoundPairs.textContent = 'Число найденных пар:';
+countFoundPairs.textContent = 'Число найденных пар: ';
 const countFoundPairsValue = document.createElement('span').textContent = '0';
 const gameField = document.createElement('div');
 gameField.classList.add('game-field');
@@ -40,4 +40,54 @@ headerButtons.append(btnNewGame, btnTableLeaders);
 mainSection.append(section1, section2);
 section1.append(gameInfo);
 gameInfo.append(countSteps, countFoundPairs);
+countSteps.append(countStepsValue);
+countFoundPairs.append(countFoundPairsValue);
 section2.append(gameField);
+
+//create game cards
+async function loadProducts() {
+  try {
+    const response = await fetch('./cards.json');
+    const cards = await response.json();
+
+    createCard(cards);
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function shuffle(array) {
+    var m = array.length, t, i;
+    while (m) {
+      i = Math.floor(Math.random() * m--);
+      t = array[m];
+      array[m] = array[i];
+      array[i] = t;
+    }
+    return array;
+}
+
+
+function createCard(cards) {
+    gameField.append('');
+
+    shuffle(cards);
+
+    cards.forEach(card => {
+        const cardItem = document.createElement('button');
+        cardItem.classList.add('game-card');
+        const cardImg = document.createElement('img');
+        cardImg.src = `${card.image}`;
+        
+        cardItem.append(cardImg);
+        gameField.append(cardItem);
+    }
+    );
+}
+
+loadProducts();
+
+btnNewGame.addEventListener('click', () => {
+  loadProducts();
+})
