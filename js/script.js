@@ -8,10 +8,10 @@ const header = document.createElement('div');
 header.classList.add('header-title');
 const titleH1 = document.createElement('h1');
 titleH1.textContent = 'Memory game';
-
 const headerButtons = document.createElement('div');
 headerButtons.classList.add('header-buttons');
 const btnNewGame = document.createElement('button');
+btnNewGame.classList.add('newgame-btn');
 btnNewGame.textContent = 'Новая игра';
 const btnTableLeaders = document.createElement('button');
 btnTableLeaders.textContent = 'Таблица лидеров';
@@ -34,27 +34,28 @@ countFoundPairsValue.textContent = '0 из 8';
 const gameField = document.createElement('div');
 gameField.classList.add('game-field');
 
-//create modal window results
-const resultPopup = document.createElement('div');
-resultPopup.classList.add('result-popup', 'hidden');
+//create modal window
+const popup = document.createElement('div');
+popup.classList.add('popup', 'hidden');
+const popupContainer = document.createElement('div');
+popupContainer.classList.add('popup-container');
+//result window
 const resultContainer = document.createElement('div');
-resultContainer.classList.add('result-container');
+resultContainer.classList.add('result-container', 'hidden');
 const resultHeader = document.createElement('h2');
 resultHeader.classList.add('result-header');
 resultHeader.textContent = '10 лучших результатов';
 const resultInfo = document.createElement('ol');
 resultInfo.classList.add('result-info');
-const btnCloseResult = document.createElement('button');
-btnCloseResult.classList.add('result-close');
-btnCloseResult.textContent = 'Закрыть';
-
-for (let i = 0; i < 10; i++) {
+//for (let i = 0; i < 10; i++) {
     const resultInfoRow = document.createElement('li');
     resultInfoRow.classList.add('result-row');
     resultInfoRow.textContent = '...';
     resultInfo.append(resultInfoRow);
-}
-//const resultInfoRow = document.createElement('li');
+//}
+const resultBtnClose = document.createElement('button');
+resultBtnClose.classList.add('result-close');
+resultBtnClose.textContent = 'Закрыть';
 
 //load document
 document.body.append(container);
@@ -68,9 +69,10 @@ gameInfo.append(countTakeSteps, countFoundPairs);
 countTakeSteps.append(countStepsValue);
 countFoundPairs.append(countFoundPairsValue);
 section2.append(gameField);
-container.append(resultPopup);
-resultPopup.append(resultContainer);
-resultContainer.append(resultHeader, resultInfo, btnCloseResult);
+container.append(popup);
+popup.append(popupContainer);
+popupContainer.append(resultContainer);
+resultContainer.append(resultHeader, resultInfo, resultBtnClose);
 
 
 let cardsArray = [];
@@ -85,8 +87,8 @@ async function loadCards() {
     console.log('cards from async = '+ cards);
     
     createCard(cards);
-    cardsClick(cardsArray, countSteps, countPairs);
-    TableResultsWindow();
+    cardsPlay(cardsArray, countSteps, countPairs);
+    tableResultsWindow();
 
   } catch (error) {
     console.error(error);
@@ -127,7 +129,7 @@ function createCard(cards) {
    
 }
 
-function cardsClick(cardsArray, countSteps, countPairs) {
+function cardsPlay(cardsArray, countSteps, countPairs) {
     const cardsGame = document.querySelectorAll('.game-card');
     //countSteps = document.querySelector('.count-steps--value').textContent;
     let card1 = '';
@@ -170,35 +172,82 @@ function cardsClick(cardsArray, countSteps, countPairs) {
                 countSteps++;
                 countStepsValue.textContent = `${countSteps}`;
             }
-        })       
+            console.log('Число пар' + countPairs);
+            if (countPairs === 8) {
+                //victory window
+                //const resultRow = document.querySelector('.result-row')
+                console.log('resultInfoRow = ' + resultInfoRow);
+                popup.classList.remove('hidden');
+                const victoryContainer = document.createElement('div');
+                victoryContainer.classList.add('victory-container');
+                const victoryHeader = document.createElement('h2');
+                victoryHeader.classList.add('victory-header');
+                victoryHeader.textContent = 'Вы выиграли!';
+                const victorySteps = document.createElement('p');
+                victorySteps.classList.add('victory-steps');
+                victorySteps.textContent = `Число ходов: ${countSteps}`;
+                const victoryButtons = document.createElement('button');
+                victoryButtons.classList.add('victory-buttons');
+                const victoryBtnNewGame = document.createElement('button');
+                victoryBtnNewGame.classList.add('newgame-btn');
+                victoryBtnNewGame.textContent = 'Новая игра';
+                const victoryBtnClose = document.createElement('button');
+                victoryBtnClose.classList.add('victory-close');
+                victoryBtnClose.textContent = 'Закрыть';
+                popupContainer.append(victoryContainer);
+                victoryButtons.append(victoryBtnNewGame, victoryBtnClose);
+                victoryContainer.append(victoryHeader, victorySteps, victoryButtons);
+                resultInfoRow.textContent = `Число ходов: ${countSteps}, Дата: ${new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
+                victoryBtnClose.addEventListener('click', () => {
+                    popup.classList.add('hidden');
+                    victoryContainer.classList.add('hidden');
+                })
+                popup.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('popup')) {
+                        popup.classList.add('hidden');
+                        victoryContainer.classList.add('hidden');
+                        }
+                })
+            }
+        })
+       
     }
 }
 
-function TableResultsWindow() {
+function tableResultsWindow() {
     btnTableLeaders.addEventListener('click', () => {
-        resultPopup.classList.remove('hidden');
+        resultContainer.classList.remove('hidden');
+        popup.classList.remove('hidden');
     })
 
-    resultPopup.addEventListener('click', (e) => {
-    if (e.target.classList.contains('result-popup')) {
-        resultPopup.classList.add('hidden');
+    popup.addEventListener('click', (e) => {
+    if (e.target.classList.contains('popup')) {
+        popup.classList.add('hidden');
         //document.body.classList.toggle('no-scroll');
-    }
+        }
+    })
 
-    btnCloseResult.addEventListener('click', () => {
-        resultPopup.classList.add('hidden');
+    resultBtnClose.addEventListener('click', () => {
+        popup.classList.add('hidden');
         //document.body.classList.toggle('no-scroll');
     })
-})
+}
+
+function tableVictoryWindow() {
+
 }
 
 loadCards();
 
-btnNewGame.addEventListener('click', () => {
-    gameField.textContent = '';
-    cardsArray = [];
-    countStepsValue.textContent = 0;
-    countFoundPairsValue.textContent = 0;
-    loadCards();
-})
+const btnsNewGame = document.querySelectorAll('.newgame-btn');
+btnsNewGame.forEach(btn => {
+    btn.addEventListener('click', () => {
+        gameField.textContent = '';
+        cardsArray = [];
+        countStepsValue.textContent = 0;
+        countFoundPairsValue.textContent = 0;
+        loadCards();
+    })
+});
+
 

@@ -141,8 +141,8 @@ button {
 }
 
 
-/* result modal window */
-.result-popup {
+/* modal window */
+.popup {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -155,17 +155,21 @@ button {
     transition: background 0.5s ease;
 }
 
+.popup-container {
+    position: relative;
+    border-radius: 40px;
+    width: 800px;
+    height: 500px;
+    background: #6db0cf;
+    transition: background 0.5s ease;
+}
+
+/* result window */
 .result-container {
     display: flex;
     gap: 20px;
     align-items: center;
     flex-direction: column;
-    border-radius: 40px;
-    padding: 16px;
-    width: 800px;
-    height: 500px;
-    background: #6db0cf;
-    transition: background 0.5s ease;
 }
 
 .result-header {
@@ -191,6 +195,58 @@ button {
 }
 
 .result-close {
+    display: block;
+    border-radius: 100px;
+    width: 200px;
+    height: 40px;
+    color: #f0f0f6;
+    background: #0f8dc8;
+    transition: color 0.5s ease, background 0.5s ease;
+}
+
+/* victory window */
+.victory-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    gap: 80px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 40px;
+    padding: 16px;
+    width: 800px;
+    height: 500px;
+    background: #d83576;
+    transition: background 0.5s ease;
+}
+
+.victory-header {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 600;
+    font-size: 64px;
+    line-height: 150%;
+    color: #f0f0f6;
+}
+
+.victory-steps {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 150%;
+    color: #f0f0f6;
+}
+
+.victory-buttons {
+    display: flex;
+    gap: 70px;
+    background: #d83576;
+    transition: background 0.5s ease;
+}
+
+.victory-buttons .newgame-btn,
+.victory-buttons .victory-close {
     display: block;
     border-radius: 100px;
     width: 200px;
