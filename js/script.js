@@ -30,9 +30,31 @@ countStepsValue.textContent = '0';
 const countFoundPairs = document.createElement('p');
 countFoundPairs.textContent = 'Число найденных пар: ';
 const countFoundPairsValue = document.createElement('span');
-countFoundPairsValue.textContent = '0';
+countFoundPairsValue.textContent = '0 из 8';
 const gameField = document.createElement('div');
 gameField.classList.add('game-field');
+
+//create modal window results
+const resultPopup = document.createElement('div');
+resultPopup.classList.add('result-popup', 'hidden');
+const resultContainer = document.createElement('div');
+resultContainer.classList.add('result-container');
+const resultHeader = document.createElement('h2');
+resultHeader.classList.add('result-header');
+resultHeader.textContent = '10 лучших результатов';
+const resultInfo = document.createElement('ol');
+resultInfo.classList.add('result-info');
+const btnCloseResult = document.createElement('button');
+btnCloseResult.classList.add('result-close');
+btnCloseResult.textContent = 'Закрыть';
+
+for (let i = 0; i < 10; i++) {
+    const resultInfoRow = document.createElement('li');
+    resultInfoRow.classList.add('result-row');
+    resultInfoRow.textContent = '...';
+    resultInfo.append(resultInfoRow);
+}
+//const resultInfoRow = document.createElement('li');
 
 //load document
 document.body.append(container);
@@ -46,6 +68,9 @@ gameInfo.append(countTakeSteps, countFoundPairs);
 countTakeSteps.append(countStepsValue);
 countFoundPairs.append(countFoundPairsValue);
 section2.append(gameField);
+container.append(resultPopup);
+resultPopup.append(resultContainer);
+resultContainer.append(resultHeader, resultInfo, btnCloseResult);
 
 
 let cardsArray = [];
@@ -61,6 +86,7 @@ async function loadCards() {
     
     createCard(cards);
     cardsClick(cardsArray, countSteps, countPairs);
+    TableResultsWindow();
 
   } catch (error) {
     console.error(error);
@@ -130,15 +156,15 @@ function cardsClick(cardsArray, countSteps, countPairs) {
                 countSteps++;
                 countPairs++;
                 countStepsValue.textContent = `${countSteps}`;
-                countFoundPairsValue.textContent = `${countPairs}`;
+                countFoundPairsValue.textContent = `${countPairs} из 8`;
             } else if (card1 !== '' && card2 !== '') {
                 console.log('Вы не угадали!');
                 setTimeout(() => {
                     card1Tag.classList.remove('open');
-                    }, 5000);
+                    }, 1500);
                 setTimeout(() => {
                     card2Tag.classList.remove('open');
-                    }, 5000);
+                    }, 1500);
                 card1 = '';
                 card2 = '';
                 countSteps++;
@@ -146,6 +172,24 @@ function cardsClick(cardsArray, countSteps, countPairs) {
             }
         })       
     }
+}
+
+function TableResultsWindow() {
+    btnTableLeaders.addEventListener('click', () => {
+        resultPopup.classList.remove('hidden');
+    })
+
+    resultPopup.addEventListener('click', (e) => {
+    if (e.target.classList.contains('result-popup')) {
+        resultPopup.classList.add('hidden');
+        //document.body.classList.toggle('no-scroll');
+    }
+
+    btnCloseResult.addEventListener('click', () => {
+        resultPopup.classList.add('hidden');
+        //document.body.classList.toggle('no-scroll');
+    })
+})
 }
 
 loadCards();

@@ -23,6 +23,7 @@ button {
     cursor: pointer;
 }
 
+/* header section */
 .header-title h1 {
     margin: 60px auto 0;
     width: 300px;
@@ -60,8 +61,9 @@ button {
     background: #6db0cf;
 }
 
+/* main section */
 .game-info {
-    width: 450px;
+    width: 500px;
     height: 30px;
     display: flex;
     justify-content: space-between;
@@ -136,4 +138,64 @@ button {
 
 .game-card:hover img {
     transform: scale(1.1);
+}
+
+
+/* result modal window */
+.result-popup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(163, 214, 224, 0.8);
+    transition: background 0.5s ease;
+}
+
+.result-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 40px;
+    padding: 16px;
+    width: 800px;
+    height: 500px;
+    background: #6db0cf;
+    transition: background 0.5s ease;
+}
+
+.result-header {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 150%;
+    color: #f0f0f6;
+}
+
+.result-info {
+    width: 500px;
+    height: 360px;
+}
+
+.result-row {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 150%;
+    text-align: center;
+    color: #f0f0f6;
+}
+
+.result-close {
+    display: block;
+    border-radius: 100px;
+    width: 200px;
+    height: 40px;
+    color: #f0f0f6;
+    background: #0f8dc8;
+    transition: color 0.5s ease, background 0.5s ease;
 }
