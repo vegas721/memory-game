@@ -22,12 +22,15 @@ const section1 = document.createElement('section');
 const section2 = document.createElement('section');
 const gameInfo = document.createElement('div');
 gameInfo.classList.add('game-info');
-const countSteps = document.createElement('p');
-countSteps.textContent = 'Число ходов: ';
-const countStepsValue = document.createElement('span').textContent = '0';
+const countTakeSteps = document.createElement('p');
+countTakeSteps.textContent = 'Число ходов: ';
+const countStepsValue = document.createElement('span');
+//countStepsValue.classList.add('count-steps--value');
+countStepsValue.textContent = '0';
 const countFoundPairs = document.createElement('p');
 countFoundPairs.textContent = 'Число найденных пар: ';
-const countFoundPairsValue = document.createElement('span').textContent = '0';
+const countFoundPairsValue = document.createElement('span');
+countFoundPairsValue.textContent = '0';
 const gameField = document.createElement('div');
 gameField.classList.add('game-field');
 
@@ -39,13 +42,16 @@ header.append(titleH1);
 headerButtons.append(btnNewGame, btnTableLeaders);
 mainSection.append(section1, section2);
 section1.append(gameInfo);
-gameInfo.append(countSteps, countFoundPairs);
-countSteps.append(countStepsValue);
+gameInfo.append(countTakeSteps, countFoundPairs);
+countTakeSteps.append(countStepsValue);
 countFoundPairs.append(countFoundPairsValue);
 section2.append(gameField);
 
 
 let cardsArray = [];
+let countSteps = 0;
+let countPairs = 0;
+
 //create game cards
 async function loadCards() {
   try {
@@ -54,7 +60,7 @@ async function loadCards() {
     console.log('cards from async = '+ cards);
     
     createCard(cards);
-    cardsClick(cardsArray);
+    cardsClick(cardsArray, countSteps, countPairs);
 
   } catch (error) {
     console.error(error);
@@ -95,8 +101,9 @@ function createCard(cards) {
    
 }
 
-function cardsClick(cardsArray) {
+function cardsClick(cardsArray, countSteps, countPairs) {
     const cardsGame = document.querySelectorAll('.game-card');
+    //countSteps = document.querySelector('.count-steps--value').textContent;
     let card1 = '';
     let card2 = '';
     let card1Tag;
@@ -107,8 +114,6 @@ function cardsClick(cardsArray) {
     for (let i = 0; i < cardsGame.length; i++) {
         cardsGame[i].addEventListener('click', () => {
             cardsGame[i].classList.add('open');
-            console.log(cardsGame[i]);
-            console.log(cardsArray[i]);
             if (card1 === '') {
                 card1 = cardsArray[i];
                 card1Tag = cardsGame[i];
@@ -122,16 +127,22 @@ function cardsClick(cardsArray) {
                 console.log('Вы угадали!');
                 card1 = '';
                 card2 = '';
+                countSteps++;
+                countPairs++;
+                countStepsValue.textContent = `${countSteps}`;
+                countFoundPairsValue.textContent = `${countPairs}`;
             } else if (card1 !== '' && card2 !== '') {
                 console.log('Вы не угадали!');
                 setTimeout(() => {
                     card1Tag.classList.remove('open');
-                    }, 3000);
+                    }, 5000);
                 setTimeout(() => {
                     card2Tag.classList.remove('open');
-                    }, 3000);
+                    }, 5000);
                 card1 = '';
                 card2 = '';
+                countSteps++;
+                countStepsValue.textContent = `${countSteps}`;
             }
         })       
     }
@@ -140,6 +151,10 @@ function cardsClick(cardsArray) {
 loadCards();
 
 btnNewGame.addEventListener('click', () => {
+    gameField.textContent = '';
+    cardsArray = [];
+    countStepsValue.textContent = 0;
+    countFoundPairsValue.textContent = 0;
     loadCards();
 })
 

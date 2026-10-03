@@ -24,7 +24,7 @@ button {
 }
 
 .header-title h1 {
-    margin: 60px auto;
+    margin: 60px auto 0;
     width: 300px;
     height: 50px;
     border-radius: 10px;
@@ -38,7 +38,7 @@ button {
 }
 
 .header-buttons {
-    margin-top: 30px;
+    margin-top: 20px;
     display: flex;
     gap: 20px;
     justify-content: center;
@@ -56,8 +56,12 @@ button {
     transition: color 0.5s ease, background 0.5s ease;
 }
 
+.header-buttons button:hover {
+    background: #6db0cf;
+}
+
 .game-info {
-    width: 400px;
+    width: 450px;
     height: 30px;
     display: flex;
     justify-content: space-between;
@@ -65,13 +69,16 @@ button {
 }
 
 .game-info p {
+    padding: 10px;
+    height: 40px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: 600;
     font-size: 16px;
     line-height: 150%;
     text-align: center;
-    border-style: none;
     color: #f0f0f6;
+    background: #0f8dc8;
+    transition: color 0.5s ease, background 0.5s ease;
 }
 
 .hidden {
