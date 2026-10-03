@@ -44,13 +44,17 @@ countSteps.append(countStepsValue);
 countFoundPairs.append(countFoundPairsValue);
 section2.append(gameField);
 
+
+let cardsArray = [];
 //create game cards
-async function loadProducts() {
+async function loadCards() {
   try {
     const response = await fetch('./cards.json');
     const cards = await response.json();
-
+    console.log('cards from async = '+ cards);
+    
     createCard(cards);
+    cardsClick(cardsArray);
 
   } catch (error) {
     console.error(error);
@@ -70,24 +74,72 @@ function shuffle(array) {
 
 
 function createCard(cards) {
-    gameField.append('');
 
     shuffle(cards);
 
     cards.forEach(card => {
         const cardItem = document.createElement('button');
         cardItem.classList.add('game-card');
-        const cardImg = document.createElement('img');
-        cardImg.src = `${card.image}`;
+        const cardImgFront = document.createElement('img');
+        cardImgFront.src = `${card.image}`;
+        cardImgFront.classList.add('game-card--img', 'front');
+        const cardImgBack = document.createElement('img');
+        cardImgBack.src = './images/nhl.jpg';
+        cardImgBack.classList.add('game-card--img', 'back');
         
-        cardItem.append(cardImg);
+        cardItem.append(cardImgFront, cardImgBack);
         gameField.append(cardItem);
-    }
-    );
+        cardsArray.push(`${card.name}`);      
+
+    });
+   
 }
 
-loadProducts();
+function cardsClick(cardsArray) {
+    const cardsGame = document.querySelectorAll('.game-card');
+    let card1 = '';
+    let card2 = '';
+    let card1Tag;
+    let card2Tag;
+    console.log(cardsGame);
+    console.log(cardsArray);
+
+    for (let i = 0; i < cardsGame.length; i++) {
+        cardsGame[i].addEventListener('click', () => {
+            cardsGame[i].classList.add('open');
+            console.log(cardsGame[i]);
+            console.log(cardsArray[i]);
+            if (card1 === '') {
+                card1 = cardsArray[i];
+                card1Tag = cardsGame[i];
+                console.log('card1 = ' + card1);
+            } else {
+                card2 = cardsArray[i];
+                card2Tag = cardsGame[i];
+                console.log('card2 = ' + card2);
+            }
+            if (card1 === card2 && card1 !== '' && card2 !== '') {
+                console.log('Вы угадали!');
+                card1 = '';
+                card2 = '';
+            } else if (card1 !== '' && card2 !== '') {
+                console.log('Вы не угадали!');
+                setTimeout(() => {
+                    card1Tag.classList.remove('open');
+                    }, 3000);
+                setTimeout(() => {
+                    card2Tag.classList.remove('open');
+                    }, 3000);
+                card1 = '';
+                card2 = '';
+            }
+        })       
+    }
+}
+
+loadCards();
 
 btnNewGame.addEventListener('click', () => {
-  loadProducts();
+    loadCards();
 })
+
