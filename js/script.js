@@ -235,7 +235,7 @@ function cardsPlay(cardsArray, countSteps, countPairs) {
                 popupContainer.append(victoryContainer);
                 victoryButtons.append(victoryBtnNewGame, victoryBtnClose);
                 victoryContainer.append(victoryHeader, victorySteps, victoryButtons);
-                resultInfoRow.textContent = `Число ходов: ${countSteps}, Дата: ${new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
+                resultInfoRow.textContent = `Число ходов: ${countSteps}   Дата: ${new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
                 victoryBtnClose.addEventListener('click', () => {
                     popup.classList.add('hidden');
                     victoryContainer.classList.add('hidden');
@@ -245,6 +245,15 @@ function cardsPlay(cardsArray, countSteps, countPairs) {
                         popup.classList.add('hidden');
                         victoryContainer.classList.add('hidden');
                         }
+                })
+                victoryBtnNewGame.addEventListener('click', () => {
+                    popup.classList.add('hidden');
+                    victoryContainer.classList.add('hidden');
+                    gameField.textContent = '';
+                    cardsArray = [];
+                    countStepsValue.textContent = 0;
+                    countFoundPairsValue.textContent = 0;
+                    loadCards();
                 })
             }
         })
