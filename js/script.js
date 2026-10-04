@@ -47,12 +47,12 @@ resultHeader.classList.add('result-header');
 resultHeader.textContent = '10 лучших результатов';
 const resultInfo = document.createElement('ol');
 resultInfo.classList.add('result-info');
-//for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 10; i++) {
     const resultInfoRow = document.createElement('li');
     resultInfoRow.classList.add('result-row');
     resultInfoRow.textContent = '...';
     resultInfo.append(resultInfoRow);
-//}
+}
 const resultBtnClose = document.createElement('button');
 resultBtnClose.classList.add('result-close');
 resultBtnClose.textContent = 'Закрыть';
@@ -111,6 +111,10 @@ function createCard(cards) {
 
     shuffle(cards);
 
+    if (cardsArray) {
+        cardsArray = [];
+    }
+
     cards.forEach(card => {
         const cardItem = document.createElement('button');
         cardItem.classList.add('game-card');
@@ -141,6 +145,8 @@ function createCard(cards) {
 }*/
 
 // play game card
+let resultObj = {};
+let playDate;
 function cardsPlay(cardsArray, countSteps, countPairs) {
     const cardsGame = document.querySelectorAll('.game-card');
     //countSteps = document.querySelector('.count-steps--value').textContent;
@@ -149,6 +155,7 @@ function cardsPlay(cardsArray, countSteps, countPairs) {
     let card1Tag;
     let card2Tag;
     let clickDisabled = false;
+    
     console.log(cardsGame);
     console.log(cardsArray);
 
@@ -211,10 +218,10 @@ function cardsPlay(cardsArray, countSteps, countPairs) {
             }         
 
             console.log('Число пар' + countPairs);
-            if (countPairs === 8) {
+            if (countPairs === 1) {
                 //victory window
                 //const resultRow = document.querySelector('.result-row')
-                console.log('resultInfoRow = ' + resultInfoRow);
+                //console.log('resultInfoRow = ' + resultInfoRow);
                 popup.classList.remove('hidden');
                 const victoryContainer = document.createElement('div');
                 victoryContainer.classList.add('victory-container');
@@ -235,7 +242,13 @@ function cardsPlay(cardsArray, countSteps, countPairs) {
                 popupContainer.append(victoryContainer);
                 victoryButtons.append(victoryBtnNewGame, victoryBtnClose);
                 victoryContainer.append(victoryHeader, victorySteps, victoryButtons);
-                resultInfoRow.textContent = `Число ходов: ${countSteps}   Дата: ${new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
+                playDate = new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                console.log('countSteps = ' + countSteps);
+                console.log('playDate = ' + playDate);
+                resultObj[countSteps] = playDate;
+                console.log('resultObj.countSteps = ' + resultObj[countSteps]);
+                //const resultInfoRow = document.querySelectorAll('result-row');
+                //resultInfoRow.textContent = `Число ходов: ${countSteps}   Дата: ${new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
                 victoryBtnClose.addEventListener('click', () => {
                     popup.classList.add('hidden');
                     victoryContainer.classList.add('hidden');
@@ -250,21 +263,31 @@ function cardsPlay(cardsArray, countSteps, countPairs) {
                     popup.classList.add('hidden');
                     victoryContainer.classList.add('hidden');
                     gameField.textContent = '';
-                    cardsArray = [];
                     countStepsValue.textContent = 0;
                     countFoundPairsValue.textContent = 0;
                     loadCards();
                 })
-            }
-        })
-       
+                tableResultsWindow();
+            } 
+        })  
     }
 }
-
+const resultInfoRow = document.querySelectorAll('result-row');
+    console.log('resultInfoRow = ' + resultInfoRow);
 function tableResultsWindow() {
+    
     btnTableLeaders.addEventListener('click', () => {
         resultContainer.classList.remove('hidden');
         popup.classList.remove('hidden');
+
+        resultInfoRow.forEach(row => {
+            for (let key in resultObj) {
+            console.log('key = ' + key);
+            console.log('resultObj.key = ' + resultObj[key]);
+            console.log('row = ' + row);
+            row.textContent = key;
+            }
+        });
     })
 
     popup.addEventListener('click', (e) => {
