@@ -140,6 +140,13 @@ button {
     transform: scale(1.1);
 }
 
+.game-card.matched:hover {
+    cursor: default;
+}
+
+.game-card.matched:hover img {
+    transform: scale(1.0);
+}
 
 /* modal window */
 .popup {

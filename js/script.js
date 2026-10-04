@@ -129,6 +129,18 @@ function createCard(cards) {
    
 }
 
+/*function clickDisabled(element, isClick) {
+    element.forEach(el => {
+        el.addEventListener('click', () => {
+        if (el.classList.contains('matched')) return;
+
+        //isClick = true;
+        })
+    });
+    console.log(element);
+}*/
+
+// play game card
 function cardsPlay(cardsArray, countSteps, countPairs) {
     const cardsGame = document.querySelectorAll('.game-card');
     //countSteps = document.querySelector('.count-steps--value').textContent;
@@ -136,42 +148,68 @@ function cardsPlay(cardsArray, countSteps, countPairs) {
     let card2 = '';
     let card1Tag;
     let card2Tag;
+    let clickDisabled = false;
     console.log(cardsGame);
     console.log(cardsArray);
 
     for (let i = 0; i < cardsGame.length; i++) {
+        //let timeout;
         cardsGame[i].addEventListener('click', () => {
-            cardsGame[i].classList.add('open');
-            if (card1 === '') {
+            if (clickDisabled) return;
+            
+            if (card1 === '' && !cardsGame[i].classList.contains('matched')) {
                 card1 = cardsArray[i];
                 card1Tag = cardsGame[i];
+                cardsGame[i].classList.add('open');
+                if (cardsGame[i].classList.contains('open')) {
+                clickDisabled = true;
+                setTimeout(() => {
+                    clickDisabled = false;
+                    }, 100);
+                }
                 console.log('card1 = ' + card1);
-            } else {
+            } else if (!cardsGame[i].classList.contains('matched') && !cardsGame[i].classList.contains('open')) {
                 card2 = cardsArray[i];
                 card2Tag = cardsGame[i];
+                cardsGame[i].classList.add('open');
                 console.log('card2 = ' + card2);
+                clickDisabled = true;
+                setTimeout(() => {
+                    clickDisabled = false;
+                }, 1000);
             }
-            if (card1 === card2 && card1 !== '' && card2 !== '') {
+            if (card1 === card2 && card1 !== '' && card2 !== '' && (!card1Tag.classList.contains('matched') || !card2Tag.classList.contains('matched'))) {
                 console.log('Вы угадали!');
+                clickDisabled = false;
                 card1 = '';
                 card2 = '';
                 countSteps++;
                 countPairs++;
+                card1Tag.classList.add('matched');
+                card2Tag.classList.add('matched');
                 countStepsValue.textContent = `${countSteps}`;
                 countFoundPairsValue.textContent = `${countPairs} из 8`;
+            } else if (card1Tag.classList.contains('matched') && card1Tag.classList.contains('open') && card2Tag.classList.contains('matched') && card2Tag.classList.contains('open')) {
+                clickDisabled = true;
+                card1 = '';
+                card2 = '';
+                    setTimeout(() => {
+                        clickDisabled = false;
+                    }, 100);
             } else if (card1 !== '' && card2 !== '') {
                 console.log('Вы не угадали!');
                 setTimeout(() => {
                     card1Tag.classList.remove('open');
-                    }, 1500);
+                    }, 1000);
                 setTimeout(() => {
                     card2Tag.classList.remove('open');
-                    }, 1500);
+                    }, 1000);
                 card1 = '';
                 card2 = '';
                 countSteps++;
                 countStepsValue.textContent = `${countSteps}`;
-            }
+            }         
+
             console.log('Число пар' + countPairs);
             if (countPairs === 8) {
                 //victory window
