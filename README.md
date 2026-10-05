@@ -25,4 +25,4 @@
 
 ## Запуск
 
-На ветке `memory-game` откройте `index.html` в браузере.
+На ветке `memory-game` откройте `index.html` в браузере, либо перейдите по ссылке https://vegas721.github.io/memory-game/.
