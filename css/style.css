@@ -1,3 +1,8 @@
+:root {
+    --color: #e0e0e6;
+    --bg: #0f8dc8;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -34,8 +39,8 @@ button {
     font-size: 32px;
     line-height: 150%;
     text-align: center;
-    color: #f0f0f6;
-    background: #0f8dc8;
+    color: var(--color);
+    background: var(--bg);
 }
 
 .header-buttons {
@@ -52,8 +57,8 @@ button {
     border-radius: 100px;
     width: 200px;
     height: 40px;
-    color: #f0f0f6;
-    background: #0f8dc8;
+    color: var(--color);
+    background: var(--bg);
     transition: color 0.5s ease, background 0.5s ease;
 }
 
@@ -78,8 +83,8 @@ button {
     font-size: 16px;
     line-height: 150%;
     text-align: center;
-    color: #f0f0f6;
-    background: #0f8dc8;
+    color: var(--color);
+    background: var(--bg);
     transition: color 0.5s ease, background 0.5s ease;
 }
 
@@ -95,7 +100,7 @@ button {
     justify-content: center;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #0f8dc8;
+    border: 1px solid var(--bg);
     border-radius: 20px;
     max-width: 500px;
     width: 100%;
@@ -184,21 +189,20 @@ button {
     font-weight: 600;
     font-size: 32px;
     line-height: 150%;
-    color: #f0f0f6;
+    color: var(--color);
 }
 
 .result-info {
-    width: 500px;
+    width: 550px;
     height: 360px;
 }
 
 .result-row {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: 600;
-    font-size: 24px;
-    line-height: 150%;
-    text-align: center;
-    color: #f0f0f6;
+    font-size: 18px;
+    line-height: 200%;
+    color: var(--color);
 }
 
 .result-close {
@@ -206,7 +210,7 @@ button {
     border-radius: 100px;
     width: 200px;
     height: 40px;
-    color: #f0f0f6;
+    color: var(--color);
     background: #0f8dc8;
     transition: color 0.5s ease, background 0.5s ease;
 }
@@ -225,8 +229,6 @@ button {
     padding: 16px;
     width: 800px;
     height: 500px;
-    background: #d83576;
-    transition: background 0.5s ease;
 }
 
 .victory-header {
@@ -234,7 +236,7 @@ button {
     font-weight: 600;
     font-size: 64px;
     line-height: 150%;
-    color: #f0f0f6;
+    color: var(--color);
 }
 
 .victory-steps {
@@ -242,13 +244,13 @@ button {
     font-weight: 600;
     font-size: 32px;
     line-height: 150%;
-    color: #f0f0f6;
+    color: var(--color);
 }
 
 .victory-buttons {
     display: flex;
     gap: 70px;
-    background: #d83576;
+    background: #6db0cf;
     transition: background 0.5s ease;
 }
 
@@ -258,7 +260,7 @@ button {
     border-radius: 100px;
     width: 200px;
     height: 40px;
-    color: #f0f0f6;
-    background: #0f8dc8;
+    color: var(--color);
+    background: var(--bg);
     transition: color 0.5s ease, background 0.5s ease;
 }

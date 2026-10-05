@@ -1,3 +1,5 @@
+//window.localStorage.clear();
+
 // create container
 const container = document.createElement('div');
 container.classList.add('container');
@@ -81,18 +83,18 @@ let countPairs = 0;
 
 //create game cards
 async function loadCards() {
-  try {
-    const response = await fetch('./cards.json');
-    const cards = await response.json();
-    console.log('cards from async = '+ cards);
-    
-    createCard(cards);
-    cardsPlay(cardsArray, countSteps, countPairs);
-    tableResultsWindow();
+    try {
+        const response = await fetch('./cards.json');
+        const cards = await response.json();
+        console.log('cards from async = '+ cards);
+        
+        createCard(cards);
+        cardsPlay(cardsArray, countSteps, countPairs);
+        tableResultsWindow();
 
-  } catch (error) {
-    console.error(error);
-  }
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 function shuffle(array) {
@@ -105,7 +107,6 @@ function shuffle(array) {
     }
     return array;
 }
-
 
 function createCard(cards) {
 
@@ -133,23 +134,23 @@ function createCard(cards) {
    
 }
 
-/*function clickDisabled(element, isClick) {
-    element.forEach(el => {
-        el.addEventListener('click', () => {
-        if (el.classList.contains('matched')) return;
-
-        //isClick = true;
-        })
-    });
-    console.log(element);
-}*/
-
 // play game card
-let resultObj = {};
+let resultArray = [];
 let playDate;
+
+if (window.localStorage.length > 0) {
+    for (let i = 0; i < window.localStorage.length - 1; i++) {
+        resultArray.push(window.localStorage.getItem(`place${i + 1}`));
+        if (resultArray[i] === null) {
+            resultArray.splice(i, 1);
+        }
+    };
+}
+console.log('resultArray begin =', resultArray);
+
+
 function cardsPlay(cardsArray, countSteps, countPairs) {
     const cardsGame = document.querySelectorAll('.game-card');
-    //countSteps = document.querySelector('.count-steps--value').textContent;
     let card1 = '';
     let card2 = '';
     let card1Tag;
@@ -218,11 +219,10 @@ function cardsPlay(cardsArray, countSteps, countPairs) {
             }         
 
             console.log('Число пар' + countPairs);
-            if (countPairs === 1) {
+            if (countPairs === 8) {
                 //victory window
-                //const resultRow = document.querySelector('.result-row')
-                //console.log('resultInfoRow = ' + resultInfoRow);
                 popup.classList.remove('hidden');
+                resultContainer.classList.add('hidden');
                 const victoryContainer = document.createElement('div');
                 victoryContainer.classList.add('victory-container');
                 const victoryHeader = document.createElement('h2');
@@ -242,13 +242,21 @@ function cardsPlay(cardsArray, countSteps, countPairs) {
                 popupContainer.append(victoryContainer);
                 victoryButtons.append(victoryBtnNewGame, victoryBtnClose);
                 victoryContainer.append(victoryHeader, victorySteps, victoryButtons);
-                playDate = new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                console.log('countSteps = ' + countSteps);
-                console.log('playDate = ' + playDate);
-                resultObj[countSteps] = playDate;
-                console.log('resultObj.countSteps = ' + resultObj[countSteps]);
-                //const resultInfoRow = document.querySelectorAll('result-row');
-                //resultInfoRow.textContent = `Число ходов: ${countSteps}   Дата: ${new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
+
+                let playDate = new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+                resultArray.push(`Число ходов: ${countSteps},   Дата: ${playDate}`);
+
+                resultArray.sort((a, b) => a.localeCompare(b));
+
+                console.log('countSteps = ', countSteps);
+                console.log('playDate = ', playDate);
+                console.log('resultArray = ', resultArray);
+                
+                for (let i = 0; i < resultArray.length; i++) {
+                    window.localStorage.setItem(`place${i + 1}`, `${resultArray[i]}`);
+                }
+
                 victoryBtnClose.addEventListener('click', () => {
                     popup.classList.add('hidden');
                     victoryContainer.classList.add('hidden');
@@ -267,27 +275,31 @@ function cardsPlay(cardsArray, countSteps, countPairs) {
                     countFoundPairsValue.textContent = 0;
                     loadCards();
                 })
-                tableResultsWindow();
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        popup.classList.add('hidden');
+                        //document.body.classList.toggle('no-scroll');
+                    }
+                })
+                tableResultsWindow(resultArray);
             } 
         })  
     }
 }
-const resultInfoRow = document.querySelectorAll('result-row');
-    console.log('resultInfoRow = ' + resultInfoRow);
-function tableResultsWindow() {
-    
+
+function tableResultsWindow(resultArray) {
+    const resultInfoRow = document.querySelectorAll('.result-row');
     btnTableLeaders.addEventListener('click', () => {
+
         resultContainer.classList.remove('hidden');
         popup.classList.remove('hidden');
 
-        resultInfoRow.forEach(row => {
-            for (let key in resultObj) {
-            console.log('key = ' + key);
-            console.log('resultObj.key = ' + resultObj[key]);
-            console.log('row = ' + row);
-            row.textContent = key;
-            }
-        });
+        if (window.localStorage.length > 0) {
+            for (let i = 0; i < window.localStorage.length; i++) {
+                if (i === 10) break;
+                resultInfoRow[i].textContent = window.localStorage.getItem(`place${i + 1}`);
+            };
+        }
     })
 
     popup.addEventListener('click', (e) => {
@@ -301,10 +313,13 @@ function tableResultsWindow() {
         popup.classList.add('hidden');
         //document.body.classList.toggle('no-scroll');
     })
-}
 
-function tableVictoryWindow() {
-
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            popup.classList.add('hidden');
+            //document.body.classList.toggle('no-scroll');
+        }
+    })
 }
 
 loadCards();
